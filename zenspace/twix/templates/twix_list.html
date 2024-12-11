@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Your Zen Space
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center mt-8 text-3xl font-bold text-orange-500 shadow-lg animate-pulse">
+    Share Your Thoughts with TWIX
+</h1>
+
+<a href="{% url 'twix_create' %}" class="block max-w-xs mx-auto mt-4 mb-8 px-4 py-2 bg-orange-500 text-white font-semibold text-center rounded-lg hover:bg-orange-600 transition duration-300 ease-in-out transform hover:scale-105">
+    Create a Twix
+</a>
+
+<h2 class="text-xl font-bold text-center mt-6 px-5 py-4">Users to Explore</h2>
+
+<div class="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+    {% for twix in twixs %}
+    <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden p-4 transform transition duration-300 hover:shadow-lg hover:scale-105">
+        
+        <!-- Profile Section -->
+        <div class="flex items-center mb-3">
+            <!-- Profile Picture -->
+            <div class="mr-4">
+                {% if twix.user.profile.profile_image %}
+                    <img src="{{ twix.user.profile.profile_image.url }}" alt="{{ twix.user.username }}'s profile picture" class="h-5 w-5 rounded-full border-2 border-gray-300">
+                {% else %}
+                    <img src="{% static 'images/newmainicon.jpg' %}" alt="Default Profile Picture" class="h-5 w-5 rounded-full border-2 border-gray-300">
+                {% endif %}
+            </div>
+            <!-- Username and Date -->
+            <div class="ml-2">  <!-- Added left margin for spacing -->
+                <span class="font-bold text-white">@{{ twix.user.username }}</span>
+                {% comment %} <p class="text-sm text-gray-400">{{ twix.created_at|date:"F j, Y, g:i a" }}</p> {% endcomment %}
+            </div>
+        </div>
+
+        <!-- Image -->
+        {% if twix.photo %}
+        <img src="{{ twix.photo.url }}" alt="Twix photo" class="w-full h-48 object-cover mb-4">
+        {% endif %}
+
+        <!-- Twix Content -->
+        <div>
+            <p class="text-gray-300 mb-4">{{ twix.text|default:"No content available" }}</p>
+            {{twix.number_of_likes}} Likes - 
+            {% if user in twix.likes.all %}
+                <a href="{% url 'twix_like' twix.id %}">
+                    <i class="fa-solid fa-heart" style="color:red"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'twix_like' twix.id %}">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
+            {% endif %}
+            
+        </div>
+        <br>   
+        <h2>Comments</h2>
+            <br>
+            {% if twix.comments.all %}
+               <strong>
+                <a href="{% url 'add_comment' twix.id %} " class="text-orange-500 hover:underline">  <i class="fa fa-comment-dots mr-2"></i> Add Comment</a></strong> 
+                <br><br>
+                {% for comment in twix.comments.all %}
+                <br>
+                <div class="comment">
+                    <strong>
+                        {{ comment.user.username }} -
+                    </strong>
+                    <p class="mt-2 text-gray-200">{{ comment.text }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-gray-400">No comments yet. <a href="{% url 'add_comment' twix.id %}" class="text-blue-500 hover:underline">Add One</a></p>
+            {% endif %}
+
+
+        <!-- Options to Edit or Delete for Post Owner -->
+        {% if twix.user == request.user %}
+        <div class="flex justify-between mt-4">
+            <a href="{% url 'twix_edit' twix.id %}" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105">
+                Edit
+            </a>
+            <a href="{% url 'twix_delete' twix.id %}" class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105">
+                Delete
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

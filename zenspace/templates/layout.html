@@ -1,0 +1,73 @@
+{% comment %} {% load static tailwind_tags %}
+{% extends "base.html" %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% tailwind_css %}
+    <title>
+        {% block title %}
+        Your Zen Space
+        {% endblock %}
+    </title>
+</head>
+
+<body class="bg-gray-900 text-white">
+    <nav class="bg-gray-800">
+        <div class="container mx-auto flex items-center justify-between p-4">
+            <a class="text-lg font-semibold text-white" href="#">Tweetbar</a>
+            <button class="text-white focus:outline-none sm:hidden" onclick="toggleMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <div id="navbarSupportedContent" class="hidden sm:flex sm:items-center space-x-4">
+                <a class="text-white hover:text-gray-400" href="#">Home</a>
+                <a class="text-white hover:text-gray-400" href="#">Link</a>
+                <div class="relative group">
+                    <a class="text-white hover:text-gray-400 cursor-pointer">Dropdown</a>
+                    <ul class="dropdown hidden group-hover:block absolute bg-gray-700 mt-2 py-2 rounded shadow-lg">
+                        <li><a class="block px-4 py-2 text-white hover:bg-gray-600" href="#">Action</a></li>
+                        <li><a class="block px-4 py-2 text-white hover:bg-gray-600" href="#">Another action</a></li>
+                        <li><hr class="border-gray-600 my-1"></li>
+                        <li><a class="block px-4 py-2 text-white hover:bg-gray-600" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+                <span class="text-gray-500">Disabled</span>
+            </div>
+            <form class="hidden sm:flex items-center space-x-2" action="{% url 'search' %}" method="get">
+                <input class="px-2 py-1 rounded text-gray-900" type="search" name="query" placeholder="Search" aria-label="Search">
+                <button class="px-3 py-1 bg-green-500 rounded text-white hover:bg-green-600" type="submit">Search</button>
+            </form>
+            <div class="flex items-center space-x-2">
+                <a href="{% url 'twix_list' %}" class="px-3 py-1 bg-blue-500 rounded text-white hover:bg-blue-600">Twix Home</a>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="px-3 py-1 bg-red-500 rounded text-white hover:bg-red-600" type="submit">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'register' %}" class="px-3 py-1 bg-blue-500 rounded text-white hover:bg-blue-600">Register</a>
+                    <a href="{% url 'login' %}" class="px-3 py-1 bg-green-500 rounded text-white hover:bg-green-600">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto mt-6">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navbarSupportedContent');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html> {% endcomment %}

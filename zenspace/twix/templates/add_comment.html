@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Comment on Twix{% endblock %}
+{% block content %}
+
+<div class="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+    <div class="w-full max-w-md p-6 bg-gray-800 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold text-center mb-4">Add Comment</h1>
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div class="space-y-2">
+                <label for="{{ form.text.id_for_label }}" class="text-white block text-sm font-medium">Text</label>
+                <textarea name="text" id="{{ form.text.id_for_label }}" rows="4" class="block w-full p-3 bg-gray-800 text-white border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">{{ form.text.value }}</textarea>
+                {% if form.text.errors %}
+                    <p class="text-orange-400 text-xs mt-1">{{ form.text.errors }}</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition duration-200">
+                Add Comment
+            </button>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

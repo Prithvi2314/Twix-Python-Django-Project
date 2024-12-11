@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto mt-8">
+    <form method="get" action="{% url 'search' %}" class="mb-6">
+        <div class="flex items-center space-x-4">
+            {{ form.as_p }}
+           
+        </div>
+    </form>
+
+    {% if query %}
+        <h2 class="text-xl font-semibold text-gray-300 mb-6">Results for "{{ query }}"</h2>
+        {% if results %}
+           <ul class="space-y-6">
+            {% for result in results %}
+                <li class="bg-gray-700 p-4 rounded-lg shadow-md flex items-center space-x-4 hover:shadow-lg transition-shadow duration-300">
+                    {% if result.photo %}
+                        <img src="{{ result.photo.url }}" alt="Twix photo" class="w-32 h-32 object-cover rounded-md shadow-md flex-shrink-0">
+                    {% endif %}
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-gray-300">Post:</h3>
+                        <p class="text-gray-200 mb-2">{{ result.text }}</p>
+                        <small class="text-gray-300">Posted by {{ result.user.username }} on {{ result.created_at }}</small>
+                    </div>
+                </li>
+            {% endfor %}
+           </ul>
+        {% else %}
+            <p class="text-gray-300 mt-6">No results found.</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Your Zen Space
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center mt-8 text-3xl font-bold text-orange-500 shadow-md">
+    Share Your Thoughts with TWIX
+</h1>
+
+<div class="max-w-md mx-auto mt-6 p-6 bg-gray-300 text-black rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:shadow-xl hover:scale-105">
+
+    <h2 class="text-center text-xl font-semibold mb-4">
+        {% if form.instance.pk %}
+            Edit Twix
+        {% else %}
+            Create Twix
+        {% endif %}
+    </h2>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
+        <div class="space-y-4">
+            {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="w-full py-2 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-300 transition duration-300 transform hover:scale-105">
+            Submit
+        </button>
+
+        <a href="{% url 'twix_list' %}" class="block text-center text-orange-400 mt-4 hover:text-orange-500 underline transition duration-300">
+            Back to Twix List
+        </a>
+    </form>
+</div>
+
+{% endblock %}
+

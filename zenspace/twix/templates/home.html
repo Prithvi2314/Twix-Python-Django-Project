@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Your Zen Space
+{% endblock %}
+
+{% comment %} {% block content %}
+    
+    <!-- Header -->
+    <header class="max-w-2xl mx-auto text-center py-8">
+        <h1 class="text-4xl font-bold text-orange-500 mb-2 animate-pulse">Welcome to 
+            <span  class="relative inline-block text-white underline-animation">Zen Space</span>
+        </h1>
+        <p class="text-xl text-white">Share your thoughts, connect with friends, and stay updated. Your voice matters!</p>
+    </header>
+    
+    <!-- Main Content Section -->
+    <main class="max-w-2xl mx-auto my-8 p-6 bg-gray-900 rounded-lg shadow-lg">
+        <h2 class="text-2xl text-center text-white font-semibold mb-4">Recent Twix Posts</h2>
+        <p class="text-center text-white text-lg mb-6">Be the first to start a conversation and connect with others.</p>
+
+        <!-- Flexbox for Button and Image -->
+        <div class="flex items-center justify-between mt-8">
+            <a href="{% url 'twix_list' %}" 
+            class="bg-gray-900 text-white px-4 py-3 rounded-md font-bold shadow-lg border border-white transition-transform duration-300 ease-in-out hover:bg-orange-500 hover:border-orange-500 hover:scale-105">
+             Explore Twixs
+             </a>
+            <!-- Button with hover and animation effects -->
+            <a href="{% url 'twix_create' %}" 
+               class="bg-orange-500 text-white px-4 py-3 rounded-md font-bold shadow-lg transform transition duration-300 ease-in-out hover:bg-orange-600 hover:scale-105 hover:shadow-xl">
+                + Create a Twix
+            </a>
+            
+            <!-- Image with rounded corners and hover shadow effect -->
+            <img src="{% static 'images/newimg6.jpg' %}" alt="Zen Space Image" 
+                 class="w-72 h-auto rounded-lg shadow-lg transition duration-300 transform hover:scale-105 hover:shadow-xl mr-2">
+        </div>
+    </main>  
+
+    <!-- Footer Section -->
+    <footer class="text-center py-4 text-gray-500 text-sm mt-8">
+        &copy; 2024 Your Zen Space. All rights reserved. Created by PRITHVI KAMBLE.
+    </footer>
+{% endblock %}  {% endcomment %}
+
+
+{% comment %} 
+{% block content %}
+<div class="bg-gray-900 text-gray-100 min-h-screen py-12">
+    <div class="max-w-6xl mx-auto px-6">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            
+            <h1 class="text-5xl font-bold text-orange-500 mb-4">Welcome to Twix</h1> 
+            <p class="text-lg text-gray-300">
+                A platform to share your thoughts, connect with others, and express yourself like never before.
+            </p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <i class="fa-solid fa-pen-nib text-orange-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Create Posts</h2>
+                <p class="text-gray-300">
+                    Share your thoughts and experiences with the world. Add images and captions to make your posts stand out.
+                </p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <i class="fa-solid fa-heart text-red-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Reactions & Comments</h2>
+                <p class="text-gray-300">
+                    Engage with posts through likes and comments. Show your appreciation or join the conversation.
+                </p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <i class="fa-solid fa-users text-green-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Follow & Connect</h2>
+                <p class="text-gray-300">
+                    Follow your favorite users, connect with friends, and grow your network within the Twix community.
+                </p>
+            </div>
+            <!-- Feature 4 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <i class="fa-solid fa-envelope text-blue-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Direct Messaging</h2>
+                <p class="text-gray-300">
+                    Chat privately with other users. Share ideas, build friendships, and stay connected.
+                </p>
+            </div>
+            <!-- Feature 5 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <i class="fa-solid fa-lock text-yellow-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Secure & Private</h2>
+                <p class="text-gray-300">
+                    Your data is safe with us. Enjoy a secure platform designed to protect your privacy.
+                </p>
+            </div>
+            <!-- Feature 6 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <i class="fa-solid fa-cogs text-purple-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Customizable</h2>
+                <p class="text-gray-300">
+                    Tailor your profile and preferences to make Twix uniquely yours.
+                </p>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="text-center mt-12">
+            <a href="{% url 'login' %}" class="bg-orange-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:bg-orange-600">
+                Join Twix Today!
+            </a>
+
+            
+            <a href="{% url 'twix_list' %}" 
+            class="bg-gray-900 text-white px-4 py-3 rounded-md font-bold shadow-lg border border-white transition-transform duration-300 ease-in-out hover:bg-orange-500 hover:border-orange-500 hover:scale-105">
+             Explore Twixs
+             </a>
+        </div>
+    </div>
+</div>
+{% endblock %} {% endcomment %}
+
+
+{% block content %}
+<!-- Add AOS styles and scripts -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<div class="bg-gray-900 text-gray-100 min-h-screen py-12">
+    <div class="max-w-6xl mx-auto px-6">
+        <!-- Hero Section -->
+        <div class="text-center mb-12" data-aos="fade-in" data-aos-delay="1000">
+            <h1 class="text-5xl font-bold text-orange-500 mb-4 animate__animated animate__zoomIn animate-pulse-2s">Welcome to Twix</h1>
+            <p class="text-lg text-gray-300 mb-6 animate__animated animate__fadeIn animate__delay-2s">
+                A platform to share your thoughts, connect with others, and express yourself like never before.
+            </p>
+            <a href="{% url 'login' %}" class="bg-orange-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 animate__animated animate__fadeIn animate__delay-3s">
+                Join Twix Today!
+            </a>
+        </div>
+
+        <!-- About Twix Section -->
+        <div class="text-center mb-12" data-aos="fade-up" data-aos-delay="1300">
+            <h2 class="text-3xl font-semibold text-gray-100">About Twix</h2>
+            <p class="text-lg text-gray-300 mt-4 max-w-3xl mx-auto">
+                Twix is more than just a platform to post your thoughts. It's a community where you can connect with like-minded people,
+                share experiences, explore new ideas, and build meaningful relationships. Whether you're looking for inspiration, entertainment,
+                or just a place to relax, Twix provides the perfect space to be yourself and interact with others in a secure and fun environment.
+            </p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Feature 1 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg" data-aos="fade-right" data-aos-delay="1500">
+                <i class="fa-solid fa-pen-nib text-orange-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Create Posts</h2>
+                <p class="text-gray-300">
+                    Share your thoughts and experiences with the world. Add images, videos, and captions to make your posts stand out.
+                    Let your voice be heard and make an impact!
+                </p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg" data-aos="fade-down" data-aos-delay="1600">
+                <i class="fa-solid fa-heart text-red-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Reactions & Comments</h2>
+                <p class="text-gray-300">
+                    Engage with posts through likes, reactions, and comments. Show your appreciation or join the conversation. It's your space to express your opinion.
+                </p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg" data-aos="fade-left" data-aos-delay="1700">
+                <i class="fa-solid fa-users text-green-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Follow & Connect</h2>
+                <p class="text-gray-300">
+                    Follow your favorite users, connect with friends, and grow your network. Stay up to date with everything happening in your circle.
+                </p>
+            </div>
+            <!-- Feature 4 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg" data-aos="fade-right" data-aos-delay="1800">
+                <i class="fas fa-user-friends text-blue-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">HubLink</h2>
+                <p class="text-gray-300">
+                    Share ideas, build friendships, and stay connected. share and grow and also connect  on other social media.
+                </p>
+            </div>
+            <!-- Feature 5 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg" data-aos="fade-up" data-aos-delay="1900">
+                <i class="fa-solid fa-lock text-yellow-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Secure & Private</h2>
+                <p class="text-gray-300">
+                    Your privacy is our priority. Enjoy a secure platform designed to protect your personal data while allowing you to express yourself freely.
+                </p>
+            </div>
+            <!-- Feature 6 -->
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg" data-aos="fade-left" data-aos-delay="2000">
+                <i class="fa-solid fa-cogs text-purple-500 text-4xl mb-4"></i>
+                <h2 class="text-xl font-bold text-gray-100 mb-2">Customizable</h2>
+                <p class="text-gray-300">
+                    Tailor your profile and preferences to make Twix uniquely yours. Choose your theme, set up notifications, and enjoy a personalized experience.
+                </p>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="text-center mt-12" data-aos="fade-up" data-aos-delay="2100">
+            <br/><br/>
+            <a href="{% url 'twix_list' %}" class="bg-gray-900 text-white px-4 py-3 rounded-md font-bold shadow-lg border border-white transition-transform duration-300 ease-in-out hover:bg-orange-500 hover:border-orange-500 hover:scale-105">
+                Explore Twixs
+            </a>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="text-center mt-16" data-aos="fade-up" data-aos-delay="2200">
+            <p class="text-gray-300">© 2024 Twix. All rights reserved.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Initialize AOS -->
+<script>
+    AOS.init({
+        duration: 1000, // Duration of animation
+        once: true,     // Only animate once
+        easing: 'ease-in-out', // Animation easing
+    });
+</script>
+{% endblock %}

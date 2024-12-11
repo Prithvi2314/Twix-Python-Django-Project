@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="bg-gray-800 min-h-screen p-8">
+    <div class="max-w-5xl mx-auto bg-gray-700 shadow-lg rounded-lg p-8 text-gray-100">
+        {% if profile %}
+            <!-- Header Section -->
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-4xl font-bold">{{ profile.user.username }}'s Profile</h1>
+                {% if request.user.id == profile.user.id %}
+                    <a href="{% url 'update_user' %}" 
+                       class="bg-orange-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-500 transition-transform transform hover:scale-105">
+                       Edit Profile
+                    </a>
+                {% endif %}
+            </div>
+
+            <!-- Profile Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Profile Image -->
+                <div class="flex flex-col items-center">
+                    {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" alt="Profile Image" class="h-40 w-40 rounded-full border-4 border-gray-500">
+                    {% else %}
+                        <img src="{% static 'photos/icon.png' %}" alt="Default Profile Image" class="h-40 w-40 rounded-full border-4 border-gray-500">
+                    {% endif %}
+                </div>
+                
+                <!-- Stats and Bio -->
+                <div class="col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="text-center">
+                            <p class="text-2xl font-semibold">{{ twixs|length }}</p>
+                            <p class="text-sm text-gray-400">Posts</p>
+                        </div>
+                        <div class="text-center">
+                            <a href="{% url "followers" profile.user.id %}" >
+                            <p class="text-2xl font-semibold">{{ profile.followed_by.count }}</p>
+                            <p class="text-sm text-black-400 hover:underline">Followers</p>
+                            </a>
+                        </div>
+                        <div class="text-center">
+                            <a href="{% url "follows" profile.user.id %}" >
+                            <p class="text-2xl font-semibold">
+                                {{ profile.follows.count }}</p> 
+                            <p class="text-sm text-black-400 hover:underline">Following</p>
+                            </a>
+                        </div>
+                    </div>
+                    <p class="text-xl italic text-gray-200">{{ profile.profile_bio }}</p>
+                </div>
+            </div>
+
+            <!-- Social Links Section -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Social Links</h2>
+                <div class="flex flex-wrap gap-4">
+                    {% if profile.email %}
+                        <a href="{{ profile.email }}" target="new" class="bg-red-600 px-4 py-2 rounded-lg text-white hover:bg-red-400">
+                            <i class="fa-regular fa-envelope"></i> Email
+                        </a>
+                    {% endif %}
+                    {% if profile.facebook_link %}
+                        <a href="{{ profile.facebook_link }}" target="new" class="bg-blue-700 px-4 py-2 rounded-lg text-white hover:bg-blue-600">
+                            <i class="fa-brands fa-facebook"></i> Facebook
+                        </a>
+                    {% endif %}
+                    {% if profile.instagram_link %}
+                        <a href="{{ profile.instagram_link }}" target="new" class="bg-purple-700 px-4 py-2 rounded-lg text-white hover:bg-pink-800">
+                            <i class="fa-brands fa-instagram"></i> Instagram
+                        </a>
+                    {% endif %}
+                    {% if profile.linkedin_link %}
+                        <a href="{{ profile.linkedin_link }}" target="new" class="bg-blue-800 px-4 py-2 rounded-lg text-white hover:bg-blue-700">
+                            <i class="fa-brands fa-linkedin"></i> LinkedIn
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Twix Posts Section -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Twix Posts</h2>
+                {% if twixs %}
+                    {% for twix in twixs %}
+                        <div class="bg-gray-800 border border-gray-600 rounded-lg p-4 mb-4">
+                            <div class="flex items-center mb-4">
+                                {% if twix.user.profile.profile_image %}
+                                    <img src="{{ twix.user.profile.profile_image.url }}" alt="Profile Image" class="h-10 w-10 rounded-full mr-4">
+                                {% else %}
+                                    <img src="{% static 'images/newmainicon.jpg' %}" alt="Default Profile Image" class="h-10 w-10 rounded-full mr-4">
+                                {% endif %}
+                                <div>
+                                    <span class="text-lg font-bold">@{{ twix.user.username }}</span>
+                                    <p class="text-sm text-gray-400">{{ twix.created_at|date:"F j, Y, g:i a" }}</p>
+                                </div>
+                            </div>
+                            <p class="mb-4">{{ twix.text }}</p>
+                            {% if twix.photo %}
+                                <img src="{{ twix.photo.url }}" alt="Twix Image" class="rounded-lg max-h-40">
+                            {% endif %}
+                            <div class="mt-4 flex items-center gap-4">
+                                <span>{{ twix.number_of_likes }} Likes</span>
+                                {% if user in twix.likes.all %}
+                                    <a href="{% url 'twix_like' twix.id %}" class="text-red-500"><i class="fa-solid fa-heart"></i> Unlike</a>
+                                {% else %}
+                                    <a href="{% url 'twix_like' twix.id %}" class="text-gray-400"><i class="fa-regular fa-heart"></i> Like</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-gray-400">This user has not posted any Twix yet.</p>
+                {% endif %}
+            </div>
+
+        <!-- Follows and Followed By Section -->
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Follows -->
+                <div class="bg-white p-3 rounded-lg shadow-md">
+                    <strong class="text-xl text-gray-800">Follows</strong>
+                    <div class="mt-2">
+                        {% for following in profile.follows.all %}
+                            <a href="{% url 'profile' following.user.id %}" class="text-blue-600 hover:text-blue-800">@{{ following }}</a> 
+                            <a href="{% url 'unfollow' following.user.id %}"><i class="fa-solid fa-user-minus" style="color: gray; margin-left: 10px;"></i></a>
+                            <br/>
+                        {% endfor %}
+                        
+                    </div>
+            </div>
+
+            <!-- Followed By  -->
+            <div class="bg-white p-3 rounded-lg shadow-md">
+                <strong class="text-xl text-gray-800">Followed By</strong>
+                <div class="mt-2">
+                    {% for followed_by in profile.followed_by.all|slice:3 %}
+                        <a href="{% url 'profile' followed_by.user.id %}" class="text-blue-600 hover:text-blue-800">@{{ followed_by }}</a>
+                        {% if followed_by in profile.follows.all %}
+                            <!-- Show unfollow button if user is already followed -->
+                            <a href="{% url 'unfollow' followed_by.user.id %}">
+                                <i class="fa-solid fa-user-minus" style="color: gray; margin-left: 10px;"></i>
+                            </a>
+                        {% else %}
+                            <!-- Show follow button if user is not followed -->
+                            <a href="{% url 'follow' followed_by.user.id %}">
+                                <i class="fa-solid fa-user-plus" style="color: gray; margin-left: 10px;"></i>
+                            </a>
+                        {% endif %}
+                        <br/> 
+                    {% endfor %}
+                    <br/>
+                    <a href="{% url "followers" profile.user.id %}"> See All...</a>
+                    
+                </div>
+            </div>
+            
+        </div>
+           <br/> 
+
+            <!-- Follow/Unfollow Button -->
+            <div class="mt-8 text-center">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% if profile in user.profile.follows.all %}
+                    <button 
+                        class="px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75" 
+                        name="follow" 
+                        value="unfollow" 
+                        type="submit">
+                        Unfollow @{{ profile.user.username |lower }}
+                    </button>
+                    {% else %}
+                    <button 
+                        class="px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75" 
+                        name="follow" 
+                        value="follow" 
+                        type="submit">
+                        Follow @{{ profile.user.username }}
+                    </button>
+                    {% endif %}
+                </form>
+            </div>
+        {% else %}
+            <p class="text-gray-500 text-center">No profile data available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+
+

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="max-w-md mx-auto p-6 bg-gray-900 rounded-lg shadow-xl text-white">
+        <h2 class="text-4xl text-center font-semibold mb-6">Login</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="space-y-4">
+                <!-- Username Field -->
+                <div class="space-y-2">
+                    <label for="{{ form.username.id_for_label }}" class="text-white block text-sm font-medium">Username</label>
+                    <input type="text" name="username" id="{{ form.username.id_for_label }}" class="block w-full p-3 bg-gray-800 text-white border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+                
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <label for="{{ form.password.id_for_label }}" class="text-white block text-sm font-medium">Password</label>
+                    <input type="password" name="password" id="{{ form.password.id_for_label }}" class="block w-full p-3 bg-gray-800 text-white border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="w-full py-3 text-lg bg-orange-500 text-white rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-300 transition-all duration-300 ease-in-out transform hover:scale-105 mt-6">
+                Login
+            </button>
+        </form>
+
+        <!-- Registration Link -->
+        <p class="text-center text-white mt-4">
+            Don't have an account? 
+            <a href="{% url 'register' %}" class="text-orange-500 hover:text-orange-600 hover:underline focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-300">Register Here</a>
+        </p>
+    </div>
+{% endblock %}
+
+
+

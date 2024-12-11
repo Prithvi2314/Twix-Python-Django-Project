@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   <!-- Profile List Heading -->
+   <div class="text-center">
+      <h1 class="text-3xl font-bold text-gray-300 mb-8 inline-block border-b-4 border-orange-500 pb-1">
+         {{ request.user.username }} is Following.
+      </h1>
+   </div>
+
+   {% if profiles %}
+      <div class="space-y-6">
+         {% for profile in profiles.follows.all %}
+            <div class="max-w-xl mx-auto bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
+               <div class="flex items-center p-4">
+                  <!-- Profile Image -->
+                  <div class="flex-shrink-0 w-20 h-20">
+                     {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" alt="Profile Icon" class="rounded-full object-cover border border-gray-300">
+                     {% else %}
+                        <img src="{% static 'photos/icon.png' %}" alt="Profile Icon" class="rounded-full object-cover border border-gray-300">
+                     {% endif %}
+                  </div>
+                  <div class="ml-4">
+                     <h5 class="text-lg font-semibold text-gray-800"> <!-- Link to the user's profile page -->
+                        <a href="{% url 'profile' profile.user.id %}">
+                           {{ profile.user.username }}
+                        </a>
+                     </h5>
+                     {% if profile in profiles.follows.all %}
+                        <!-- Show unfollow button if user is already followed -->
+                        <a href="{% url 'unfollow' profile.user.id %}">
+                           <i class="fa-solid fa-user-minus" style="color: gray; margin-left: 10px;"></i>
+                        </a>
+                     {% else %}
+                        <!-- Show follow button if user is not followed -->
+                        <a href="{% url 'follow' profile.user.id %}">
+                           <i class="fa-solid fa-user-plus" style="color: gray; margin-left: 10px;"></i>
+                        </a>
+                     {% endif %}
+                     <p class="text-xs text-gray-500 mt-2">Last Updated: {{ profile.date_modified|date:"F j, Y, g:i a" }}</p>
+                  </div>
+               </div>
+            </div>
+         {% endfor %}
+      </div>
+   {% else %}
+      <p class="text-center text-gray-500 mt-8">No profiles found.</p>
+   {% endif %}
+{% endblock %}
